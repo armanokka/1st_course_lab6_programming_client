@@ -13,18 +13,16 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 class Main{
-    private static final String host = "localhost";
-    private static final int port = 1051;
-
     public static void main(String [] args) throws Exception {
-        var client = new Client(host, port, 5000, 5);
+        var client = new Client("localhost", 1051, 5000, 5);
+        var commandHandler = new CommandHandler(client);
         var reader = new BufferedReader(new InputStreamReader(System.in));
 
         while (true) {
             System.out.print("shell>>");
             var line = reader.readLine();
 
-            CommandHandler.process(line, client, reader);
+            commandHandler.process(line, client, reader);
         }
     }
 }

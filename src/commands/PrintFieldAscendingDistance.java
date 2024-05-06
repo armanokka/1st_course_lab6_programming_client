@@ -29,7 +29,7 @@ public class PrintFieldAscendingDistance implements Command, Serializable {
      */
     @Override
     public String getDescription(){
-        return getName() + "           -- show unique distances\n";
+        return getName() + "  -- show unique distances\n";
     }
 
     /**
@@ -42,7 +42,6 @@ public class PrintFieldAscendingDistance implements Command, Serializable {
     public void execute(CollectionHandler collectionHandler, String [] args, BufferedReader reader){
         var collection = collectionHandler.getCollection();
 
-        List<Double> distances = new ArrayList<>(new HashSet<>());
         String output = "";
 
         var sortedCollection = new LinkedHashMap<>();

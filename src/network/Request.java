@@ -5,7 +5,6 @@ import interfaces.Command;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Hashtable;
 
 public class Request implements Serializable {
     @Serial
@@ -13,6 +12,9 @@ public class Request implements Serializable {
     Command command;
     String[] args;
     Route route;
+    String scriptText;
+
+    Integer keyToBeChecked;
 
     public Request(Command command, String[] args) {
         this.command = command;
@@ -24,6 +26,15 @@ public class Request implements Serializable {
         this.route = route;
     }
 
+    public Request(Command command, String scriptText) {
+        this.command = command;
+        this.scriptText = scriptText;
+    }
+
+    public Request(Integer keyToBeChecked) {
+        this.keyToBeChecked = keyToBeChecked;
+    }
+
     public Command getCommand(){
         return command;
     }
@@ -31,5 +42,17 @@ public class Request implements Serializable {
         return args;
     }
     public Route getRoute() { return route;}
+
+    public String getScriptText() {return scriptText;}
+
+    public String toString() {
+        return "Request" +
+                "\ncommand: " + command.getName() +
+                "\narguments: " + String.join(" ", args) +
+                "\nroute: " + route  +
+                "\nscriptText: " + scriptText +
+                "\nkeyToBeChecked: " + keyToBeChecked;
+    }
+
 }
 

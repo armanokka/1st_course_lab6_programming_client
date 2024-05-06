@@ -21,7 +21,7 @@ public class RemoveLower implements Command, Serializable {
      */
     @Override
     public String getName() {
-        return "remove_greater";
+        return "remove_lower";
     }
 
     /**
@@ -30,7 +30,7 @@ public class RemoveLower implements Command, Serializable {
      */
     @Override
     public String getDescription() {
-        return getName() + " {element}        -- remove all elements from collection that is greater than given\n";
+        return getName() + " {element}          -- remove all elements from collection that is lower than given\n";
     }
 
     /**

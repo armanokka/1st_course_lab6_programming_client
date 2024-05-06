@@ -49,7 +49,7 @@ public class Client {
         oos.writeObject(request);
         final byte[] data = baos.toByteArray();
         InetAddress address = InetAddress.getByName(host);
-        var socket = new DatagramSocket(2000); // client port
+        var socket = new DatagramSocket();
 
         for (var attempts = 0 ; attempts < maxReconnectionAttempts; attempts++) {
             final DatagramPacket packet = new DatagramPacket(data, data.length, address, port);
@@ -68,5 +68,9 @@ public class Client {
         }
         socket.close();
         return new Response("Server is unreachable");
+    }
+
+    public boolean checkIDAvailability(Integer id) throws Exception {
+        return sendRequest(new Request(id)).getResult().equals("free");
     }
 }

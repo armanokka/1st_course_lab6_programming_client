@@ -27,7 +27,7 @@ public class History implements Command, Serializable {
      */
     @Override
     public String getDescription() {
-        return this.getName() + "                          -- show last 6 distances\n";
+        return this.getName() + "                         -- show last 6 distances\n";
     }
 
     /**

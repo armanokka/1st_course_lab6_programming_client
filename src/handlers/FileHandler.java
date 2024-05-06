@@ -1,6 +1,9 @@
 package handlers;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 /**
  * The FileHandler class provides methods for handling files.

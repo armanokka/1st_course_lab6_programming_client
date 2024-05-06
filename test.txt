@@ -1,4 +1,4 @@
-insert 234567
+insert 0
 name
 3
 3

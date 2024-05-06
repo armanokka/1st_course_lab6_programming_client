@@ -3,12 +3,10 @@ package handlers;
 import commands.*;
 import interfaces.Command;
 
-import java.util.HashMap;
-
 /**
  * The PackageParser class provides methods for parsing and retrieving commands.
  */
-public class PackageParser {
+public class CommandParser {
     /**
      * Retrieves the Command object based on the specified commandName.
      *

@@ -5,6 +5,7 @@ import exceptions.InvalidParameterException;
 import java.io.BufferedReader;
 import java.io.Serial;
 import java.io.Serializable;
+import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,8 +19,7 @@ public class Route implements Comparable<Route>, Serializable {
     @Serial
     private static final long serialVersionUID = 18L;
 
-    private static List<Integer> usedIds  = new ArrayList<>();
-    private static  List<Integer> usedKeys  = new ArrayList<>();
+    public static List<Integer> usedIds  = new ArrayList<>(); // TODO remove this. Generate ids on the server side
     private Integer key;
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -43,20 +43,6 @@ public class Route implements Comparable<Route>, Serializable {
         return usedIds.get(usedIds.size()-1)+1;
     }
 
-
-    /**
-     * Generates a valid key for the Route.
-     *
-     * @return a valid key for the Route
-     */
-    private Integer generateValidKey() {
-        if (usedKeys.isEmpty()) {
-            return 1;
-        }
-        Collections.sort(usedKeys);
-        return usedKeys.get(usedKeys.size()-1)+1;
-    }
-
     /**
      * Removes a used ID from the list of used IDs.
      *
@@ -70,6 +56,8 @@ public class Route implements Comparable<Route>, Serializable {
      * Fills the fields of the Route class with user input.
      */
     private void fillFields(){
+        this.id = generateValidId();
+
         System.out.println("Input now parameters for Route class..");
 
         inputName();
@@ -86,7 +74,6 @@ public class Route implements Comparable<Route>, Serializable {
      * Constructs a Route object with automatically generated ID and filled fields.
      */
     public Route(){
-        this.id = generateValidId();
         fillFields();
     }
 
@@ -95,16 +82,16 @@ public class Route implements Comparable<Route>, Serializable {
      *
      * @param key the key for the Route object
      */
-    public Route(int key, BufferedReader reader) {
+    public Route(Integer key, BufferedReader reader) {
         this.reader = reader;
-        if(usedKeys.contains(key)){
-            System.out.println("Route with key " + key + " already exists");
-            return;
-        }
-
         this.key = key;
-        this.id = generateValidId();
         fillFields();
+    }
+
+    // Whether the route is filled
+    public Boolean filled() {
+        return this.name != null && this.from != null && this.to != null && this.reader != null && this.distance != null &&
+                this.coordinates != null && this.creationDate != null;
     }
 
     /**
@@ -120,10 +107,6 @@ public class Route implements Comparable<Route>, Serializable {
 
         try {
             this.key = Integer.parseInt(csv.get(0));
-            if (usedKeys.contains(this.key)) {
-                throw new InvalidParameterException("keys must be unique");
-            }
-            usedKeys.add(this.key);
         } catch (Exception e) {
             throw new InvalidParameterException("invalid key");
         }
@@ -197,6 +180,23 @@ public class Route implements Comparable<Route>, Serializable {
     /**
      * Input method for the name parameter of Route.
      */
+
+    private void inputKey() {
+        try {
+            var input = reader.readLine().strip();
+
+            var args = input.split(" ");
+            if (args.length != 2) {
+                System.out.println("Invalid number of arguments");
+                return;
+            }
+
+            this.key = Integer.parseInt(args[1]);
+        } catch (Exception e) {
+            System.out.println("Invalid key provided");
+        }
+    }
+
     private void inputName(){
         System.out.print("Please input the name parameter of Route >>");
 

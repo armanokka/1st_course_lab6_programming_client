@@ -1,7 +1,7 @@
 package commands;
 
 import handlers.CollectionHandler;
-import handlers.PackageParser;
+import handlers.CommandParser;
 import interfaces.Command;
 
 import java.io.BufferedReader;
@@ -43,7 +43,7 @@ public class Help implements Command, Serializable {
         var commands = new String[]{"help", "info", "show", "insert", "update", "remove_key", "clear", "save", "execute_script", "exit", "history", "remove_greater_key", "remove_lower_key", "count_less_than_distance", "filter_by_distance", "print_field_ascending_distance"};
 
         for(String commandName: commands){
-            var cmd = PackageParser.getCommand(commandName);
+            var cmd = CommandParser.getCommand(commandName);
             System.out.print(cmd.getDescription());
         }
     }
